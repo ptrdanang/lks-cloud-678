@@ -1,0 +1,122 @@
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:'Roboto',sans-serif;
+    line-height:1.6;
+    background:#f4f7fa;
+    color:#050505
+}
+
+.container{width:90%;max-width:1200px;margin:auto}
+
+header{
+    background:#2c3e50;
+    color:#fff;
+    padding:1rem 0;
+    box-shadow:0 2px 4px rgba(0,0,0,.1)
+}
+header .container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center
+}
+header h1{font-size:1.8rem}
+
+nav ul{list-style:none;display:flex}
+nav a{
+    color:#fff;
+    text-decoration:none;
+    padding:.5rem 1rem;
+    border-bottom:3px solid transparent;
+    transition:.3s
+}
+nav a:hover,
+nav a.active{
+    background:#34495e;
+    border-bottom-color:#3498db
+}
+
+.hero{
+    background:#ecf0f1;
+    padding:4rem 0;
+    text-align:center;
+    margin-bottom:2rem
+}
+.hero h2{font-size:2.5rem;color:#3498db}
+.hero .description{
+    max-width:700px;
+    margin:1rem auto 2rem;
+    font-size:1.1rem
+}
+
+.button{
+    display:inline-block;
+    background:#3498db;
+    color:#fff;
+    padding:.75rem 1.5rem;
+    border-radius:5px;
+    text-decoration:none
+}
+.button:hover{background:#2980b9}
+
+.content-section,
+.api-section,
+.about-section{padding:2rem 0}
+
+.content-section h3,
+.api-section h3{
+    text-align:center;
+    color:#2c3e50;
+    margin-bottom:1.5rem;
+    border-bottom:2px solid #bdc3c7;
+    padding-bottom:.5rem
+}
+
+.card-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content:center
+}
+.card{
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:20px;
+    flex:1 1 300px;
+    box-shadow:0 4px 6px rgba(0,0,0,.05)
+}
+.card h4{color:#3498db;margin-bottom:10px}
+
+.api-section{background:#ecf0f1;text-align:center}
+.api-result{
+    background:#fff;
+    padding:15px;
+    border-left:5px solid #e67e22;
+    margin-top:15px;
+    border-radius:4px;
+    display:inline-block;
+    text-align:left
+}
+
+.profile-card{border-left:5px solid #0ff007}
+.project-desc{border-left:5px solid #07f0dc}
+.profile-card p,
+.project-desc ul{margin:10px 0}
+.project-desc ul{padding-left:20px}
+.profile-card strong{display:inline-block;width:150px}
+
+footer{
+    background:#20222e;
+    color:#fff;
+    text-align:center;
+    padding:1rem 0;
+    margin-top:3rem
+}
+
+@media (max-width:600px){
+    header .container{flex-direction:column}
+    nav ul{margin-top:10px}
+    .hero h2{font-size:2rem}
+    .card-grid{flex-direction:column}
+}
