@@ -1,11 +1,13 @@
-
-const supabaseUrl = 'https://csxcdjlkptanafjdrcvp.supabase.co'; 
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzeGNkamxrcHRhbmFmamRyY3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4OTc5MTEsImV4cCI6MjA4MzQ3MzkxMX0.FYqfmVEINxrBuU9_v1wsF1ZcktYokZ5Qde3Ar_ZPkaI'; 
+// 1. Inisialisasi Supabase (HANYA SEKALI DI ATAS)
+const supabaseUrl = 'https://link-proyek-anda.supabase.co'; // Ganti dengan URL Anda
+const supabaseKey = 'masukkan-anon-key-anda'; // Ganti dengan Anon Key Anda
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+// 2. Logging Bawaan LKS
 console.log("Aplikasi Beranda LKS Cloud Dimuat (index.html)");
 console.log("Memulai Proses fetch data untuk fitur dinamis");
 
+// 3. Fitur Fetch API JSONPlaceholder (Kode Asli Anda)
 const randomId = Math.floor(Math.random() * 100) + 1;
 
 fetch(`https://jsonplaceholder.typicode.com/posts/${randomId}`)
@@ -23,9 +25,11 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${randomId}`)
 })
 .catch(error =>{
     console.error("Terjadi Masalah saat mengambil data API", error);
-    document.getElementById('data-api').textContent = 'Gagal memuat data API.';
-})
+    const apiDiv = document.getElementById('data-api');
+    if(apiDiv) apiDiv.textContent = 'Gagal memuat data API.';
+});
 
+// 4. Fitur Baru: Menampilkan Pesan dari Cloud Database
 async function tampilkanPesan() {
     const { data, error } = await supabase
         .from('Pesan')
@@ -36,17 +40,11 @@ async function tampilkanPesan() {
     if (!pesanDiv) return;
 
     if (error) {
-        console.error("Gagal mengambil data database:", error.message);
-        pesanDiv.innerHTML = "<p>Gagal memuat data dari Cloud.</p>";
+        console.error("Gagal mengambil data:", error.message);
         return;
     }
 
-    if (data.length === 0) {
-        pesanDiv.innerHTML = "<p>Belum ada data di database.</p>";
-        return;
-    }
-
-    pesanDiv.innerHTML = '';
+    pesanDiv.innerHTML = ''; 
     data.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
@@ -59,4 +57,5 @@ async function tampilkanPesan() {
     });
 }
 
+// Jalankan saat halaman siap
 document.addEventListener('DOMContentLoaded', tampilkanPesan);
