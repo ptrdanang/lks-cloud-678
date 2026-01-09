@@ -17,11 +17,13 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${randomId}`)
 })
 .then(data =>{
     const apiDiv = document.getElementById('data-api')
-    apiDiv.innerHTML = `
-    <h4>Contoh Data Yang Diambil Secara Acak ID: ${data.id}</h4>
-    <strong>Judul:</strong> ${data.title} <br>
-    <strong>Isi:</strong> ${data.body.substring (0, 100)}...
-    `
+    if(apiDiv) {
+        apiDiv.innerHTML = `
+        <h4>Contoh Data Yang Diambil Secara Acak ID: ${data.id}</h4>
+        <strong>Judul:</strong> ${data.title} <br>
+        <strong>Isi:</strong> ${data.body.substring (0, 100)}...
+        `;
+    }
 })
 .catch(error =>{
     console.error("Terjadi Masalah saat mengambil data API", error);
@@ -29,7 +31,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${randomId}`)
     if(apiDiv) apiDiv.textContent = 'Gagal memuat data API.';
 });
 
-// 4. Fitur Baru: Menampilkan Pesan dari Cloud Database
+// 4. Fitur Menampilkan Pesan dari Cloud Database
 async function tampilkanPesan() {
     const { data, error } = await supabase
         .from('Pesan')
