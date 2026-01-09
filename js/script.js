@@ -1,6 +1,7 @@
-const supabaseUrl = 'https://csxcdjlkptanafjdrcvp.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzeGNkamxrcHRhbmFmamRyY3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4OTc5MTEsImV4cCI6MjA4MzQ3MzkxMX0.FYqfmVEINxrBuU9_v1wsF1ZcktYokZ5Qde3Ar_ZPkaI';
-const clientSupabase = supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseUrl = 'https://csxcdjlkptanafjdrcvp.supabase.co'; 
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzeGNkamxrcHRhbmFmamRyY3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4OTc5MTEsImV4cCI6MjA4MzQ3MzkxMX0.FYqfmVEINxrBuU9_v1wsF1ZcktYokZ5Qde3Ar_ZPkaI'; 
+
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
 console.log("Aplikasi Beranda LKS Cloud Dimuat (index.html)");
 console.log("Memulai Proses fetch data untuk fitur dinamis");
@@ -29,7 +30,7 @@ fetch(`https://jsonplaceholder.typicode.com/posts/${randomId}`)
 });
 
 async function tampilkanPesan() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('Pesan')
         .select('*')
         .order('id', { ascending: false });
@@ -38,7 +39,12 @@ async function tampilkanPesan() {
     if (!pesanDiv) return;
 
     if (error) {
-        console.error("Gagal mengambil data:", error.message);
+        console.error("Gagal mengambil data database:", error.message);
+        return;
+    }
+
+    if (data.length === 0) {
+        pesanDiv.innerHTML = '<p>Belum ada pesan di database.</p>';
         return;
     }
 
@@ -55,29 +61,27 @@ async function tampilkanPesan() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', tampilkanPesan);
-
 async function simpanKeCloud() {
-    const namaUser = document.getElementById('input-nama').value;
-    const pesanUser = document.getElementById('input-pesan').value;
+    const namaInput = document.getElementById('input-nama');
+    const pesanInput = document.getElementById('input-pesan');
 
-    if (!namaUser || !pesanUser) {
+    if (!namaInput.value || !pesanInput.value) {
         alert("Nama dan pesan tidak boleh kosong!");
         return;
     }
 
-    const { data, error } = await supabase
+    const { error } = await supabaseClient
         .from('Pesan')
-        .insert([{ nama: namaUser, isi_pesan: pesanUser }]);
+        .insert([{ nama: namaInput.value, isi_pesan: pesanInput.value }]);
 
     if (error) {
-        console.error("Gagal menyimpan data:", error.message);
-        alert("Error: " + error.message);
+        alert("Gagal menyimpan ke Cloud: " + error.message);
     } else {
-        console.log("Data berhasil masuk ke Cloud!");
-        alert("Pesan berhasil dikirim!");
+        alert("Data berhasil tersimpan di Database Cloud!");
+        namaInput.value = '';
+        pesanInput.value = '';
         tampilkanPesan();
-        document.getElementById('input-nama').value = '';
-        document.getElementById('input-pesan').value = '';
     }
 }
+
+document.addEventListener('DOMContentLoaded', tampilkanPesan);
