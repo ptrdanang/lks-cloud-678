@@ -65,13 +65,19 @@
 
         <section class="content-section" style="background: #fff;">
             <div class="container">
+                <h3>Kirim Pesan Baru</h3>
+        <div class="card" style="max-width: 500px; margin: auto;">
+            <input type="text" id="input-nama" placeholder="Walidi Danang" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+            <textarea id="input-pesan" placeholder="Jangan Lupa Makan" style="width: 100%; margin-bottom: 10px; padding: 8px;"></textarea>
+            <button onclick="simpanKeCloud()" class="button" style="width: 100%; border: none; cursor: pointer;">Kirim Ke Database Cloud</button>
+        </div>
                 <h3>Daftar Pesan Pengunjung (Cloud Database)</h3>
              <div id="daftar-pesan" class="card-grid">
                 <p>Memuat pesan dari database cloud...</p>
              </div>
             </div>
         </section>
-        
+
     </main>
 
     <footer>
@@ -80,8 +86,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/script.js"></script>
 </body>
 </html>
